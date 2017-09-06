@@ -1,0 +1,67 @@
+version: '2'
+
+services:
+  server:
+    image: zabbix/zabbix-server-mysql:latest
+    container_name: zabbix-server
+    environment:
+      TZ: Asia/Shanghai
+      DB_SERVER_HOST: "db"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "mysql57"
+    volumes:
+     - ./zabbix/alertscripts:/usr/lib/zabbix/alertscripts
+    ports:
+     - "10051:10051"
+    user: root
+    networks:
+      default:
+        aliases:
+          - server
+    restart: always
+  
+  web:
+    image: zabbix/zabbix-web-nginx-mysql:latest
+    container_name: zabbix-web
+    environment:
+      TZ: Asia/Shanghai
+      DB_SERVER_HOST: "db"
+      MYSQL_USER: "root"
+      MYSQL_PASSWORD: "mysql57"
+      ZBX_SERVER_HOST: "server"
+    volumes:
+     - ./zabbix/graphfont.ttf:/usr/share/zabbix/fonts/graphfont.ttf
+    ports:
+     - "10052:80"
+    user: root
+    networks:
+      default:
+        aliases:
+          - web
+    restart: always 
+
+  db:
+    image: mysql:5.7
+    container_name: zabbix-mysql
+    command: --character-set-server=utf8 --collation-server=utf8_general_ci
+    environment:
+      TZ: Asia/Shanghai
+      MYSQL_ROOT_PASSWORD: "mysql57"
+    networks:
+      default:
+        aliases:
+          - db
+    volumes:
+     - /tmp/mysql:/var/lib/mysql
+    restart: always
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    environment:
+     TZ: Asia/Shanghai
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/plugins:/var/lib/grafana/plugins
+    restart: always
