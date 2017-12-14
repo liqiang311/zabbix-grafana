@@ -45,6 +45,8 @@ services:
     environment:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: "mysql57"
+    ports:
+     - "10053:3306"
     networks:
       default:
         aliases:
