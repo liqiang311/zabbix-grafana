@@ -1,0 +1,3 @@
+[submodule "grafana/plugins/grafana-zabbix"]
+	path = grafana/plugins/grafana-zabbix
+	url = https://github.com/alexanderzobnin/grafana-zabbix.git

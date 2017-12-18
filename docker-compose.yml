@@ -47,12 +47,12 @@ services:
       MYSQL_ROOT_PASSWORD: "mysql57"
     ports:
      - "10053:3306"
+    volumes:
+     - ./zabbix/mysql:/var/lib/mysql
     networks:
       default:
         aliases:
           - db
-    volumes:
-     - /tmp/mysql:/var/lib/mysql
     restart: always
 
   grafana:
