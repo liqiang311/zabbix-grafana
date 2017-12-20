@@ -2,7 +2,7 @@ version: '2'
 
 services:
   server:
-    image: zabbix/zabbix-server-mysql:latest
+    image: public-docker-virtual.artnj.zte.com.cn/zabbix/zabbix-server-mysql:latest
     container_name: zabbix-server
     environment:
       TZ: Asia/Shanghai
@@ -19,7 +19,7 @@ services:
     restart: always
   
   web:
-    image: zabbix/zabbix-web-nginx-mysql:latest
+    image: public-docker-virtual.artnj.zte.com.cn/zabbix/zabbix-web-nginx-mysql:latest
     container_name: zabbix-web
     environment:
       TZ: Asia/Shanghai
@@ -39,7 +39,7 @@ services:
     restart: always 
 
   db:
-    image: mysql:5.7
+    image: public-docker-virtual.artnj.zte.com.cn/mysql:5.7
     container_name: zabbix-mysql
     command: --character-set-server=utf8 --collation-server=utf8_general_ci
     environment:
@@ -56,7 +56,7 @@ services:
     restart: always
 
   grafana:
-    image: grafana/grafana:latest
+    image: public-docker-virtual.artnj.zte.com.cn/grafana/grafana:latest
     container_name: grafana
     environment:
      TZ: Asia/Shanghai
@@ -64,4 +64,5 @@ services:
       - 3000:3000
     volumes:
       - ./grafana/plugins:/var/lib/grafana/plugins
+      - ./grafana/grafana.db:/var/lib/grafana/grafana.db
     restart: always
